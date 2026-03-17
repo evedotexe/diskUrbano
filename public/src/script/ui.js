@@ -1,14 +1,16 @@
 import { chamadas } from "./service/api.js";
 
-const selectEstados = document.getElementById('inputEstados')
+const selectEstados = document.getElementById('inputEstados');
+const selectMunicipio = document.getElementById('inputMunicipio');
+
+let municipiosCache = [];
 
 export const ui = {
     async listarMunicipio() {
-        const municipios = await chamadas.buscarCidades()
-        console.log(municipios)
+        municipiosCache = await chamadas.buscarCidades()
 
         selectEstados.addEventListener('change', async () => {
-            const municipiosEstados = municipios.filter(m => m.microrregiao?.mesorregiao?.UF?.nome === selectEstados.value)
+            const municipiosEstados = municipiosCache.filter(m => m.microrregiao?.mesorregiao?.UF?.nome === selectEstados.value)
 
             const selectMunicipio = document.getElementById('inputMunicipio')
             selectMunicipio.innerHTML = ''

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Disk Urbano</title>
+    <script type="module" src="src/script/main.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Faça sua reclamação</h1>
+    </header>
+
+    <main>
+        <form id="formOcorrencia" method="post">
+            <label for="estados">Escolha o estado</label>
+            <select name="estados" id="inputEstados" class="inputs">
+                <option value="padrao">Escolha</option>
+                <option value="Acre">Acre</option>
+                <option value="Alagoas">Alagoas</option>
+                <option value="Amapá">Amapá</option>
+                <option value="Amazonas">Amazonas</option>
+                <option value="Bahia">Bahia</option>
+                <option value="Ceará">Ceará</option>
+                <option value="Distrito Federal">Distrito Federal</option>
+                <option value="Espírito Santo">Espírito Santo</option>
+                <option value="Goiás">Goiás</option>
+                <option value="Maranhão">Maranhão</option>
+                <option value="Mato Grosso">Mato Grosso</option>
+                <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+                <option value="Minas Gerais">Minas Gerais</option>
+                <option value="Pará">Pará</option>
+                <option value="Paraíba">Paraíba</option>
+                <option value="Paraná">Paraná</option>
+                <option value="Pernambuco">Pernambuco</option>
+                <option value="Piauí">Piauí</option>
+                <option value="Rio de Janeiro">Rio de Janeiro</option>
+                <option value="Rio Grande do Norte">Rio Grande do Norte</option>
+                <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                <option value="Rondônia">Rondônia</option>
+                <option value="Roraima">Roraima</option>
+                <option value="Santa Catarina">Santa Catarina</option>
+                <option value="São Paulo">São Paulo</option>
+                <option value="Sergipe">Sergipe</option>
+                <option value="Tocantins">Tocantins</option>
+            </select>
+            <br />
+
+            <label for="municipio">Escolha o municipio</label>
+            <select name="municipio" id="inputMunicipio"></select>
+            <br />
+
+            <label for="tipo">Qual o tipo da ocorrência?</label>
+            <select name="tipo" id="tipoOcorrencia">
+                <option value="buraco">Buraco na rua</option>
+                <option value="iluminacao">iluminação quebrada</option>
+                <option value="semaforo">Semáforo quebrado</option>
+                <option value="alagamento">Alagamento</option>
+            </select>
+            <br />
+
+            <label for="descricao">Descreva a ocorrência</label><br />
+            <textarea name="descricao" id="descricaoOcorrencia"></textarea><br />
+            <button type="submit">Enviar</button>
+        </form>
+    </main>
+
+    <footer>projeto desenvolvido em prol da disciplina devOps</footer>
+</body>
+
+</html>

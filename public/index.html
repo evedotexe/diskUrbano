@@ -1,73 +1,840 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Disk Urbano</title>
-    <script type="module" src="src/script/main.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disk Urbano</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script type="module" src="src/script/main.js"></script>
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --green-deep:   #3a7d5c;
+      --green-mid:    #52a87a;
+      --green-soft:   #8ecba8;
+      --green-pale:   #d6eddf;
+      --green-blush:  #edf7f1;
+      --beige-light:  #faf6f1;
+      --beige-warm:   #f2ebe0;
+      --beige-border: #e8ddd0;
+      --gray-dark:    #2e3530;
+      --gray-mid:     #5f6b63;
+      --gray-light:   #9aaba0;
+      --white:        #ffffff;
+      --shadow-card:  0 8px 40px rgba(42, 90, 65, 0.09);
+      --transition:   0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Jost', sans-serif;
+      background-color: var(--beige-light);
+      color: var(--gray-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(ellipse at 10% 20%, rgba(82, 168, 122, 0.12) 0%, transparent 55%),
+        radial-gradient(ellipse at 88% 80%, rgba(58, 125, 92, 0.09) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: relative;
+      z-index: 1;
+      background: var(--white);
+      border-bottom: 1px solid var(--beige-border);
+      padding: 0 2rem;
+    }
+
+    .header-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--gray-dark);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text span {
+      color: var(--green-deep);
+    }
+
+    .header-badge {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-light);
+      background: var(--beige-warm);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--beige-border);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%);
+      padding: 3rem 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 240px; height: 240px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 300px; height: 300px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.7;
+    }
+
+    /* ── STEPS ── */
+    .steps-bar {
+      position: relative;
+      z-index: 1;
+      background: var(--white);
+      border-bottom: 1px solid var(--beige-border);
+      padding: 0.85rem 2rem;
+    }
+
+    .steps-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex: 1;
+    }
+
+    .step-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--green-pale);
+      color: var(--green-deep);
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+
+    .step.active .step-num {
+      background: var(--green-deep);
+      color: white;
+    }
+
+    .step-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--gray-light);
+      letter-spacing: 0.02em;
+    }
+
+    .step.active .step-label { color: var(--gray-dark); }
+
+    .step-divider {
+      flex: 1;
+      height: 1px;
+      background: var(--beige-border);
+      margin: 0 0.5rem;
+      max-width: 60px;
+    }
+
+    /* ── MAIN ── */
+    main {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      padding: 2.5rem 1.5rem 3rem;
+    }
+
+    .form-card {
+      background: var(--white);
+      border-radius: 20px;
+      box-shadow: var(--shadow-card);
+      max-width: 620px;
+      margin: 0 auto;
+      overflow: hidden;
+      animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-card-header {
+      background: var(--green-blush);
+      border-bottom: 1px solid var(--green-pale);
+      padding: 1.4rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .form-card-header svg {
+      width: 22px;
+      height: 22px;
+      color: var(--green-deep);
+      flex-shrink: 0;
+    }
+
+    .form-card-header h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gray-dark);
+    }
+
+    .form-card-header p {
+      font-size: 0.8rem;
+      color: var(--gray-mid);
+      margin-top: 2px;
+    }
+
+    .form-body {
+      padding: 2rem 2rem 2.25rem;
+    }
+
+    #formOcorrencia {
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .field-group label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gray-mid);
+    }
+
+    .field-hint {
+      font-size: 0.73rem;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--gray-light);
+    }
+
+    .inputs,
+    select,
+    textarea {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 400;
+      color: var(--gray-dark);
+      background: var(--beige-light);
+      border: 1.5px solid var(--beige-border);
+      border-radius: 10px;
+      padding: 0.65rem 0.95rem;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+      cursor: pointer;
+    }
+
+    .inputs:hover, select:hover {
+      border-color: var(--green-soft);
+      background: var(--white);
+    }
+
+    .inputs:focus, select:focus, textarea:focus {
+      border-color: var(--green-deep);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(58, 125, 92, 0.12);
+      cursor: auto;
+    }
+
+    .select-wrap { position: relative; }
+
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 6px solid var(--green-mid);
+      pointer-events: none;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.65;
+      cursor: text;
+    }
+
+    /* ── TIPO CARDS ── */
+    .tipo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.6rem;
+    }
+
+    .tipo-card { position: relative; }
+
+    .tipo-card input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0; height: 0;
+    }
+
+    .tipo-card label {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.75rem 1rem;
+      background: var(--beige-light);
+      border: 1.5px solid var(--beige-border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--gray-mid);
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .tipo-card label .tipo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--beige-warm);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+
+    .tipo-card label .tipo-icon svg {
+      width: 17px;
+      height: 17px;
+      stroke: var(--gray-mid);
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: var(--transition);
+    }
+
+    .tipo-card input[type="radio"]:checked + label {
+      background: var(--green-blush);
+      border-color: var(--green-deep);
+      color: var(--green-deep);
+      font-weight: 500;
+      box-shadow: 0 0 0 3px rgba(58, 125, 92, 0.1);
+    }
+
+    .tipo-card input[type="radio"]:checked + label .tipo-icon {
+      background: var(--green-pale);
+    }
+
+    .tipo-card input[type="radio"]:checked + label .tipo-icon svg {
+      stroke: var(--green-deep);
+    }
+
+    .tipo-card label:hover {
+      border-color: var(--green-soft);
+      background: var(--white);
+    }
+
+    #tipoOcorrencia { display: none; }
+
+    .form-divider {
+      border: none;
+      border-top: 1px solid var(--beige-border);
+      margin: 0.2rem 0;
+    }
+
+    /* ── SUBMIT ── */
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem 1.5rem;
+      background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 16px rgba(58, 125, 92, 0.32);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0);
+      transition: background var(--transition);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(58, 125, 92, 0.4);
+    }
+
+    .btn-submit:hover::before { background: rgba(255,255,255,0.08); }
+    .btn-submit:active { transform: translateY(0); }
+
+    .btn-submit svg {
+      width: 17px; height: 17px;
+      stroke: white;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 1.4rem 2rem;
+      background: var(--white);
+      border-top: 1px solid var(--beige-border);
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--gray-light);
+      letter-spacing: 0.03em;
+    }
+
+    footer strong {
+      color: var(--green-deep);
+      font-weight: 500;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--gray-dark);
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      white-space: nowrap;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    .toast-dot {
+      width: 8px; height: 8px;
+      background: var(--green-soft);
+      border-radius: 50%;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 560px) {
+      .hero h1 { font-size: 1.9rem; }
+      .field-row { grid-template-columns: 1fr; }
+      .form-body { padding: 1.5rem; }
+      .steps-bar { display: none; }
+      .header-badge { display: none; }
+    }
+
+    @media (max-width: 380px) {
+      .tipo-grid { grid-template-columns: 1fr; }
+    }
+
+    #inputMunicipio:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 
 <body>
-    <header>
-        <h1>Faça sua reclamação</h1>
-    </header>
 
-    <main>
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <span class="logo-text">Disk<span>Urbano</span></span>
+      <span class="header-badge">Central de Ocorrências</span>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Faça sua reclamação</h1>
+      <p>Registre ocorrências urbanas de forma rápida e simples.<br>Sua cidade melhora com a sua voz.</p>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <div class="steps-bar">
+    <div class="steps-inner">
+      <div class="step active">
+        <div class="step-num">1</div>
+        <span class="step-label">Localização</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step active">
+        <div class="step-num">2</div>
+        <span class="step-label">Tipo</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step active">
+        <div class="step-num">3</div>
+        <span class="step-label">Descrição</span>
+      </div>
+      <div class="step-divider"></div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <span class="step-label">Envio</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <main>
+    <div class="form-card">
+      <div class="form-card-header">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+        </svg>
+        <div>
+          <h2>Nova ocorrência</h2>
+          <p>Preencha os dados abaixo para registrar sua reclamação</p>
+        </div>
+      </div>
+
+      <div class="form-body">
         <form id="formOcorrencia" method="post">
-            <label for="estados">Escolha o estado</label>
-            <select name="estados" id="inputEstados" class="inputs">
-                <option value="padrao">Escolha</option>
-                <option value="Acre">Acre</option>
-                <option value="Alagoas">Alagoas</option>
-                <option value="Amapá">Amapá</option>
-                <option value="Amazonas">Amazonas</option>
-                <option value="Bahia">Bahia</option>
-                <option value="Ceará">Ceará</option>
-                <option value="Distrito Federal">Distrito Federal</option>
-                <option value="Espírito Santo">Espírito Santo</option>
-                <option value="Goiás">Goiás</option>
-                <option value="Maranhão">Maranhão</option>
-                <option value="Mato Grosso">Mato Grosso</option>
-                <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
-                <option value="Minas Gerais">Minas Gerais</option>
-                <option value="Pará">Pará</option>
-                <option value="Paraíba">Paraíba</option>
-                <option value="Paraná">Paraná</option>
-                <option value="Pernambuco">Pernambuco</option>
-                <option value="Piauí">Piauí</option>
-                <option value="Rio de Janeiro">Rio de Janeiro</option>
-                <option value="Rio Grande do Norte">Rio Grande do Norte</option>
-                <option value="Rio Grande do Sul">Rio Grande do Sul</option>
-                <option value="Rondônia">Rondônia</option>
-                <option value="Roraima">Roraima</option>
-                <option value="Santa Catarina">Santa Catarina</option>
-                <option value="São Paulo">São Paulo</option>
-                <option value="Sergipe">Sergipe</option>
-                <option value="Tocantins">Tocantins</option>
-            </select>
-            <br />
 
-            <label for="municipio">Escolha o municipio</label>
-            <select name="municipio" id="inputMunicipio"></select>
-            <br />
+          <!-- Localização -->
+          <div class="field-row">
+            <div class="field-group">
+              <label for="inputEstados">Estado</label>
+              <div class="select-wrap">
+                <select name="estados" id="inputEstados" class="inputs">
+                  <option value="padrao">Selecione…</option>
+                  <option value="Acre">Acre</option>
+                  <option value="Alagoas">Alagoas</option>
+                  <option value="Amapá">Amapá</option>
+                  <option value="Amazonas">Amazonas</option>
+                  <option value="Bahia">Bahia</option>
+                  <option value="Ceará">Ceará</option>
+                  <option value="Distrito Federal">Distrito Federal</option>
+                  <option value="Espírito Santo">Espírito Santo</option>
+                  <option value="Goiás">Goiás</option>
+                  <option value="Maranhão">Maranhão</option>
+                  <option value="Mato Grosso">Mato Grosso</option>
+                  <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+                  <option value="Minas Gerais">Minas Gerais</option>
+                  <option value="Pará">Pará</option>
+                  <option value="Paraíba">Paraíba</option>
+                  <option value="Paraná">Paraná</option>
+                  <option value="Pernambuco">Pernambuco</option>
+                  <option value="Piauí">Piauí</option>
+                  <option value="Rio de Janeiro">Rio de Janeiro</option>
+                  <option value="Rio Grande do Norte">Rio Grande do Norte</option>
+                  <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                  <option value="Rondônia">Rondônia</option>
+                  <option value="Roraima">Roraima</option>
+                  <option value="Santa Catarina">Santa Catarina</option>
+                  <option value="São Paulo">São Paulo</option>
+                  <option value="Sergipe">Sergipe</option>
+                  <option value="Tocantins">Tocantins</option>
+                </select>
+              </div>
+            </div>
 
-            <label for="tipo">Qual o tipo da ocorrência?</label>
+            <div class="field-group">
+              <label for="inputMunicipio">Município</label>
+              <div class="select-wrap">
+                <select name="municipio" id="inputMunicipio">
+                  <option value="">Selecione o estado…</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <!-- Tipo -->
+          <div class="field-group">
+            <label>Tipo da ocorrência</label>
             <select name="tipo" id="tipoOcorrencia">
-                <option value="buraco">Buraco na rua</option>
-                <option value="iluminacao">iluminação quebrada</option>
-                <option value="semaforo">Semáforo quebrado</option>
-                <option value="alagamento">Alagamento</option>
+              <option value="buraco">Buraco na rua</option>
+              <option value="iluminacao">Iluminação quebrada</option>
+              <option value="semaforo">Semáforo quebrado</option>
+              <option value="alagamento">Alagamento</option>
             </select>
-            <br />
 
-            <label for="descricao">Descreva a ocorrência</label><br />
-            <textarea name="descricao" id="descricaoOcorrencia"></textarea><br />
-            <button type="submit">Enviar</button>
+            <div class="tipo-grid">
+
+              <!-- Buraco na rua — triangle warning + road -->
+              <div class="tipo-card">
+                <input type="radio" name="tipoVisual" id="tipo-buraco" value="buraco" checked>
+                <label for="tipo-buraco">
+                  <span class="tipo-icon">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M2 20h20"/>
+                      <path d="M4 20v-4"/>
+                      <path d="M20 20v-4"/>
+                      <path d="M4 16h16"/>
+                      <ellipse cx="12" cy="16" rx="3" ry="1.5"/>
+                      <path d="M12 8v4"/>
+                      <path d="M9.5 5.5L12 3l2.5 2.5"/>
+                    </svg>
+                  </span>
+                  Buraco na rua
+                </label>
+              </div>
+
+              <!-- Iluminação quebrada — lamp com X -->
+              <div class="tipo-card">
+                <input type="radio" name="tipoVisual" id="tipo-iluminacao" value="iluminacao">
+                <label for="tipo-iluminacao">
+                  <span class="tipo-icon">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M9 21h6"/>
+                      <path d="M12 3a6 6 0 0 1 4.33 10.12L15 18H9l-1.33-4.88A6 6 0 0 1 12 3z"/>
+                      <line x1="8" y1="8" x2="16" y2="14"/>
+                      <line x1="16" y1="8" x2="8" y2="14"/>
+                    </svg>
+                  </span>
+                  Iluminação quebrada
+                </label>
+              </div>
+
+              <!-- Semáforo quebrado -->
+              <div class="tipo-card">
+                <input type="radio" name="tipoVisual" id="tipo-semaforo" value="semaforo">
+                <label for="tipo-semaforo">
+                  <span class="tipo-icon">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="7" y="2" width="10" height="18" rx="2"/>
+                      <circle cx="12" cy="7" r="2"/>
+                      <circle cx="12" cy="12" r="2"/>
+                      <circle cx="12" cy="17" r="2"/>
+                      <line x1="10" y1="2" x2="7.5" y2="0"/>
+                      <line x1="14" y1="2" x2="16.5" y2="0"/>
+                    </svg>
+                  </span>
+                  Semáforo quebrado
+                </label>
+              </div>
+
+              <!-- Alagamento — water waves -->
+              <div class="tipo-card">
+                <input type="radio" name="tipoVisual" id="tipo-alagamento" value="alagamento">
+                <label for="tipo-alagamento">
+                  <span class="tipo-icon">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 12c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/>
+                      <path d="M3 17c1.5-2 3-2 4.5 0s3 2 4.5 0 3-2 4.5 0 3 2 4.5 0"/>
+                      <path d="M12 3v6"/>
+                      <path d="M9 6l3-3 3 3"/>
+                    </svg>
+                  </span>
+                  Alagamento
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <!-- Descrição -->
+          <div class="field-group">
+            <label for="descricaoOcorrencia">
+              Descrição
+              <span class="field-hint">— descreva a situação com detalhes</span>
+            </label>
+            <textarea
+              name="descricao"
+              id="descricaoOcorrencia"
+              placeholder="Ex: Há um buraco de aproximadamente 50cm na calçada em frente ao número 123, próximo à escola municipal…"
+              maxlength="800"
+            ></textarea>
+            <span id="charCount" style="font-size:0.72rem;color:var(--gray-light);text-align:right;margin-top:2px;">0 / 800</span>
+          </div>
+
+          <!-- Submit -->
+          <button type="submit" class="btn-submit">
+            <svg viewBox="0 0 24 24">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+            Enviar Ocorrência
+          </button>
+
         </form>
-    </main>
+      </div>
+    </div>
+  </main>
 
-    <footer>projeto desenvolvido em prol da disciplina devOps</footer>
+  <!-- FOOTER -->
+  <footer>
+    Projeto desenvolvido para a disciplina <strong>DevOps</strong> &nbsp;·&nbsp; Disk Urbano &copy; 2025
+  </footer>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast">
+    <span class="toast-dot"></span>
+    <span id="toastMsg">Ocorrência enviada com sucesso!</span>
+  </div>
+
+  <script>
+    document.querySelectorAll('input[name="tipoVisual"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        document.getElementById('tipoOcorrencia').value = radio.value;
+      });
+    });
+
+    const textarea = document.getElementById('descricaoOcorrencia');
+    const charCount = document.getElementById('charCount');
+    textarea.addEventListener('input', () => {
+      charCount.textContent = `${textarea.value.length} / 800`;
+    });
+
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      const dot = toast.querySelector('.toast-dot');
+      document.getElementById('toastMsg').textContent = msg;
+      dot.style.background = isError ? '#e57373' : 'var(--green-soft)';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    document.getElementById('formOcorrencia').addEventListener('submit', (e) => {
+      const estado = document.getElementById('inputEstados').value;
+      const municipio = document.getElementById('inputMunicipio').value;
+      const descricao = document.getElementById('descricaoOcorrencia').value.trim();
+
+      if (estado === 'padrao' || !estado) {
+        e.preventDefault();
+        showToast('Por favor, selecione um estado.', true);
+        return;
+      }
+      if (!municipio) {
+        e.preventDefault();
+        showToast('Por favor, selecione um município.', true);
+        return;
+      }
+      if (!descricao) {
+        e.preventDefault();
+        showToast('Adicione uma descrição antes de enviar.', true);
+        return;
+      }
+    });
+  </script>
 </body>
 
 </html>
